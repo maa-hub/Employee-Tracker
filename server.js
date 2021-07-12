@@ -1,13 +1,5 @@
-const express = require('express');
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
@@ -19,11 +11,17 @@ const db = mysql.createConnection(
       password: 'konadu17',
       database: 'employees'
     },
-    console.log('Connected to the election database.')
+    console.log('Connected to the employees database.')
   );
 
+  db.connect((error) => {
+    if (error) throw error;
+    promptUser();
+  });
+  
+
   // Prompt User for Choices
-const userQuestions = () => {
+const promptUser = () => {
   inquirer.prompt([
       {
         name: 'choices',
@@ -103,13 +101,28 @@ const userQuestions = () => {
         }
 
         if (choices === 'Exit') {
-            connection.end();
+            db.end();
         }
   });
 };
 
-
-
+const viewAllEmployees = () => {
+  let sql =       `SELECT employee.id, 
+                  employee.first_name, 
+                  employee.last_name, 
+                  role.title, 
+                  department.department_name AS 'department', 
+                  role.salary
+                  FROM employee, role, department 
+                  WHERE department.id = role.department_id 
+                  AND role.id = employee.role_id
+                  ORDER BY employee.id ASC`;
+  db.promise().query(sql, (error, response) => {
+    if (error) throw error
+    console.table(response);
+    promptUser();
+  });
+};
 
 
 
