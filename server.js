@@ -108,6 +108,17 @@ const viewAllEmployees = () => {
 // };
 
 
+// // View all Departments
+// const viewAllDepartments = () => {
+//   const sql = `SELECT department.id AS id, department.department_name AS department FROM department`;
+//   db.promise().query(sql, (error, response) => {
+//     if (error) throw error;
+//     console.table(response);
+//     promptUser();
+//   });
+// };
+
+
 
 
 
