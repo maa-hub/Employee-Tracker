@@ -36,7 +36,7 @@ THEN I am prompted to select an employee to update and their new role and this i
 * NPM
 
 # Link to README video 
-🎥 Full video tutorial can be found [here](./public/READMEtutorialvideo.webm) 
+🎥 Full video tutorial can be found [here](./public/tutorialvideo.webm) 
 
 ## Contribution
 Made with ❤️ by Maame
